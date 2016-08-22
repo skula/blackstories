@@ -44,12 +44,12 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				face = FACE_RIDDLE;
 				int pId = card.getId() - 1;
-				if(pId == 0){
+				if(pId == 1){
 					btnPrevious.setEnabled(false);
 				}
 				btnNext.setEnabled(true);
 			
-				card = Card.CARDS.get(pId);
+				card = Card.CARDS.get(pId-1);
 				cardPict.setImageResource(card.getDrawableRiddle());
 				cardRank.setText(getRank());
 			}
@@ -62,12 +62,12 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				face = FACE_RIDDLE;
 				int nId = card.getId() + 1;
-				if(nId == Card.CARDS.size() -1){
+				if(nId == Card.CARDS.size()){
 					btnNext.setEnabled(false);
 				}
 				btnPrevious.setEnabled(true);
 				
-				card = Card.CARDS.get(nId);
+				card = Card.CARDS.get(nId-1);
 				cardPict.setImageResource(card.getDrawableRiddle());
 				cardRank.setText(getRank());
 			}
@@ -93,7 +93,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private String getRank(){
-		return (card.getId()+1) + "/" + Card.CARDS.size();
+		return (card.getId()) + "/" + Card.CARDS.size();
 	}
 
 	@Override
