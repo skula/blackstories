@@ -1,11 +1,19 @@
 package com.skula.blackstories.activities;
 
+import java.util.NoSuchElementException;
+
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.skula.blackstories.R;
@@ -44,12 +52,12 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				face = FACE_RIDDLE;
 				int pId = card.getId() - 1;
-				if(pId == 1){
+				if(pId == 0){
 					btnPrevious.setEnabled(false);
 				}
 				btnNext.setEnabled(true);
 			
-				card = Card.CARDS.get(pId-1);
+				card = Card.CARDS.get(pId);
 				cardPict.setImageResource(card.getDrawableRiddle());
 				cardRank.setText(getRank());
 			}
@@ -62,12 +70,12 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				face = FACE_RIDDLE;
 				int nId = card.getId() + 1;
-				if(nId == Card.CARDS.size()){
+				if(nId == Card.CARDS.size()-1){
 					btnNext.setEnabled(false);
 				}
 				btnPrevious.setEnabled(true);
 				
-				card = Card.CARDS.get(nId-1);
+				card = Card.CARDS.get(nId);
 				cardPict.setImageResource(card.getDrawableRiddle());
 				cardRank.setText(getRank());
 			}
