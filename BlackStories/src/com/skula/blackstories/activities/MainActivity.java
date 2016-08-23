@@ -29,6 +29,8 @@ public class MainActivity extends Activity {
 	private Button btnPrevious;
 	private Button btnNext;
 	private Button btnTurn;
+	private Button btnFirst;
+	private Button btnLast;
 	
 	private Card card;
 	private int face;
@@ -47,15 +49,19 @@ public class MainActivity extends Activity {
 		this.cardRank.setText(getRank());
 		
 		this.btnPrevious = (Button) findViewById(R.id.btn_previous);
+		this.btnPrevious.setText("<");
 		this.btnPrevious.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				face = FACE_RIDDLE;
+				btnTurn.setText("Histoire");
 				int pId = card.getId() - 1;
 				if(pId == 0){
 					btnPrevious.setEnabled(false);
+					btnFirst.setEnabled(false);
 				}
 				btnNext.setEnabled(true);
+				btnLast.setEnabled(true);
 			
 				card = Card.CARDS.get(pId);
 				cardPict.setImageResource(card.getDrawableRiddle());
@@ -65,15 +71,19 @@ public class MainActivity extends Activity {
 		this.btnPrevious.setEnabled(false);
 		
 		this.btnNext = (Button) findViewById(R.id.btn_next);
+		this.btnNext.setText(">");
 		this.btnNext.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				face = FACE_RIDDLE;
+				btnTurn.setText("Histoire");
 				int nId = card.getId() + 1;
 				if(nId == Card.CARDS.size()-1){
 					btnNext.setEnabled(false);
+					btnLast.setEnabled(false);
 				}
 				btnPrevious.setEnabled(true);
+				btnFirst.setEnabled(true);
 				
 				card = Card.CARDS.get(nId);
 				cardPict.setImageResource(card.getDrawableRiddle());
@@ -82,6 +92,7 @@ public class MainActivity extends Activity {
 		});
 		if(Card.CARDS.size() == 1){
 			this.btnNext.setEnabled(false);
+			this.btnLast.setEnabled(false);
 		}
 				
 		this.btnTurn = (Button) findViewById(R.id.btn_turn);
@@ -90,18 +101,62 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				if(face == FACE_RIDDLE){
 					face = FACE_STORY;
+					btnTurn.setText("Enigme");
 					cardPict.setImageResource(card.getDrawableStory());
 				}else{
 					face = FACE_RIDDLE;
+					btnTurn.setText("Histoire");
 					cardPict.setImageResource(card.getDrawableRiddle());
 				}
+				btnNext.setEnabled(true);
+				btnLast.setEnabled(true);
 			}
 		});
 		
+		this.btnFirst = (Button) findViewById(R.id.btn_first);
+		this.btnFirst.setText("<<");
+		this.btnFirst.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				face = FACE_RIDDLE;
+				btnTurn.setText("Histoire");
+				int pId = 0;
+
+				btnPrevious.setEnabled(false);
+				btnFirst.setEnabled(false);
+				btnNext.setEnabled(true);
+				btnLast.setEnabled(true);
+			
+				card = Card.CARDS.get(pId);
+				cardPict.setImageResource(card.getDrawableRiddle());
+				cardRank.setText(getRank());
+			}
+		});
+		this.btnFirst.setEnabled(false);
+		
+		this.btnLast = (Button) findViewById(R.id.btn_last);
+		this.btnLast.setText(">>");
+		this.btnLast.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				face = FACE_RIDDLE;
+				btnTurn.setText("Histoire");
+				int nId = Card.CARDS.size()-1;
+				
+				btnNext.setEnabled(false);
+				btnLast.setEnabled(false);
+				btnPrevious.setEnabled(true);
+				btnFirst.setEnabled(true);
+				
+				card = Card.CARDS.get(nId);
+				cardPict.setImageResource(card.getDrawableRiddle());
+				cardRank.setText(getRank());
+			}
+		});
 	}
 	
 	private String getRank(){
-		return (card.getId()) + "/" + Card.CARDS.size();
+		return "- " +(card.getId()+1) + "/" + Card.CARDS.size() + " -";
 	}
 
 	@Override
